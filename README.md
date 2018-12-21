@@ -1,13 +1,14 @@
 # Group-Activity-Recognition
-A novel Participation-Contributed Temporal Dynamic Model for Group Activity Recognition
+A novel Participation-Contributed Temporal Dynamic Model for Group Activity Recognition.
 
-This respotory include the code of PCTDM and some baseline such as HDTM[1], Wang[], impelement by Pytorch.
+This repository includes the code of PCTDM and some baselines such as HDTM[1], Wang[2], impelemented by Pytorch.
 
 In 2019, I will clear up the code again!
 For further information about me, you can go to my [homepage](https://ruiyan1995.github.io/)
 
 
 Pealse cite the following paper:  
+
 @inproceedings{yan2018participation,  
 &nbsp;&nbsp;&nbsp;&nbsp;title={Participation-Contributed Temporal Dynamic Model for Group Activity Recognition},  
 &nbsp;&nbsp;&nbsp;&nbsp;author={Yan, Rui and Tang, Jinhui and Shu, Xiangbo and Li, Zechao and Tian, Qi},  
