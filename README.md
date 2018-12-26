@@ -1,10 +1,26 @@
 # Group-Activity-Recognition
-A novel Participation-Contributed Temporal Dynamic Model for Group Activity Recognition.
+Participation-Contributed Temporal Dynamic Model for Group Activity Recognition.
 
-This repository includes the code of PCTDM and some baselines such as HDTM[1], Wang[2], impelemented by Pytorch.
+This repository includes the code of PCTDM and some baselines such as HDTM[1], Wang[2], impelemented by Pytorch. We give a general DMS code framework for Group Activity Recognition task. You can apply new model or new dataset into this framework easily! In 2019, I will clear up the code again! For further information about me, you can go to my [homepage](https://ruiyan1995.github.io/)
 
-In 2019, I will clear up the code again!
-For further information about me, you can go to my [homepage](https://ruiyan1995.github.io/)
+You can run it as following scripts:
+python GAR.py
+
+The general piplines of GAR:
+
+Preprocessing dataset
+
+To download VD and CAD;
+
+To track the persons in video by Dlib, which implemented in Preprocessing.py;
+
+Action Level (action recognition and extracting action features)
+To create a Piplines instance Action = Action_Level(dataset_root, dataset_name, 'trainval_action');
+For action recognition, you can run Action.trainval();
+For extracting action features, you can run Action.extract_feas(save_folder);
+
+Activity Level (action features aggregation and activity recognition)
+
 
 
 Pealse cite the following paper:  
