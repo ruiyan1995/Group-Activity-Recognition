@@ -14,8 +14,8 @@ python GAR.py
 ### Action Level
 - To create a Piplines instance as:
 ***Action = Action_Level(dataset_root, dataset_name, 'trainval_action');***
-- For action recognition, you can run ***Action.trainval();***
-- For extracting action features, you can run ==Action.extract_feas(save_folder)==;
+- For action recognition, you can run 'Action.trainval()';
+- For extracting action features, you can run 'Action.extract_feas(save_folder)';
 
 Activity Level (action features aggregation and activity recognition)
 
