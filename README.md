@@ -6,24 +6,22 @@ This repository includes the code of PCTDM and some baselines such as HDTM[1], W
 You can run it as following scripts:
 python GAR.py
 
-The general piplines of GAR:
+## The general piplines of GAR
+### Preprocessing dataset
+- To download VD and CAD;
+- To track the persons in video by Dlib, which implemented in Preprocessing.py;
 
-Preprocessing dataset
-
-To download VD and CAD;
-
-To track the persons in video by Dlib, which implemented in Preprocessing.py;
-
-Action Level (action recognition and extracting action features)
-To create a Piplines instance Action = Action_Level(dataset_root, dataset_name, 'trainval_action');
-For action recognition, you can run Action.trainval();
-For extracting action features, you can run Action.extract_feas(save_folder);
+### Action Level
+- To create a Piplines instance as:
+***Action = Action_Level(dataset_root, dataset_name, 'trainval_action');***
+- For action recognition, you can run ***Action.trainval();***
+- For extracting action features, you can run ***Action.extract_feas(save_folder)***;
 
 Activity Level (action features aggregation and activity recognition)
 
 
-
-Pealse cite the following paper:  
+## License and Citation
+In case using our code framework, please site the following publication. 
 
 @inproceedings{yan2018participation,  
 &nbsp;&nbsp;&nbsp;&nbsp;title={Participation-Contributed Temporal Dynamic Model for Group Activity Recognition},  
