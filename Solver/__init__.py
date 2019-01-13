@@ -1,2 +1,2 @@
-from Solver import *
+from .Solver import *
 

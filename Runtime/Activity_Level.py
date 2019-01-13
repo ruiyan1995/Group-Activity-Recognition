@@ -1,9 +1,8 @@
 from Piplines import *
-from Dataset import VD_img, CAD_img
 class Activity_Level(Piplines):
 	"""docstring for Action_Level"""
-	def __init__(self, dataset_root, dataset_name):
-		super(Activity_Level, self).__init__(dataset_root, dataset_name, 'activity')
+	def __init__(self, dataset_root, dataset_name, mode):
+		super(Activity_Level, self).__init__(dataset_root, dataset_name, 'activity', mode)
 
 		
 	def extractFeas(self, save_folder):
@@ -11,6 +10,7 @@ class Activity_Level(Piplines):
 		print 'Done, the features files are saved at ' + save_folder + '\n'
 
 
-	def __loadModel(self, model_confs):
-		net = models.alexNet_LSTM(pretrained=True, model_confs=model_confs)
+	def loadModel(self, model_confs):
+		net = Models.one_to_all(pretrained=False, model_confs=model_confs)
+		print net
 		return net

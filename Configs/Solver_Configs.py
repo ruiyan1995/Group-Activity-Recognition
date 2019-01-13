@@ -16,31 +16,37 @@ class Solver_Configs(object):
 		self.confs_dict = {
 			'VD':{
 				'action':{
-					'num_epochs': 100,
-					'batch_size': {'trainval':300,'test':10},
-					'step_size': 10,
-					'lr_scheduler': {'step_size': 10, 'gamma': 0.1},
+					'num_epochs': 20,
+					'lr_scheduler': {'step_size': 5, 'gamma': 0.1},
 					'optimizer': {'method':'SGD','lr':0.001,'arg':0.9}
 				},
 				'activity':{
 					'num_epochs': 100,
-					'batch_size': {'trainval':300,'test':10},
 					'lr_scheduler': {'step_size': 10, 'gamma': 0.1},
 					'optimizer': {'method':'Adam','lr':0.0001,'arg':(0.9,0.9)}
+				},
+				'semantic':{
+					'num_epochs': 50,
+					'lr_scheduler': {'step_size': 10, 'gamma': 0.1},
+					'optimizer': {'method':'Adam','lr':0.01,'arg':(0.9,0.9)}
+					#'optimizer': {'method':'SGD','lr':0.001,'arg':0.9}
 				}
 				
 			},
 
 			'CAD':{
 				'action':{
-					'num_epochs': 100,
-					'batch_size': {'trainval':300,'test':10},
-					'lr_scheduler': {'step_size': 10, 'gamma': 0.1},
+					'num_epochs': 20,
+					'lr_scheduler': {'step_size': 5, 'gamma': 0.1},
 					'optimizer': {'method':'SGD','lr':0.001,'arg':0.9}
 				},
 				'activity':{
 					'num_epochs': 100,
-					'batch_size': {'trainval':1000,'test':10},
+					'lr_scheduler': {'step_size': 10, 'gamma': 0.1},
+					'optimizer': {'method':'Adam','lr':0.0001,'arg':(0.9,0.9)}
+				},
+				'semantic':{
+					'num_epochs': 100,
 					'lr_scheduler': {'step_size': 10, 'gamma': 0.1},
 					'optimizer': {'method':'Adam','lr':0.0001,'arg':(0.9,0.9)}
 				}
@@ -52,14 +58,13 @@ class Solver_Configs(object):
 		solver_confs = self.confs_dict[self.dataset_name][self.stage]
 		parser = argparse.ArgumentParser()
 		parser.add_argument('--num_epochs', type=int, default=solver_confs['num_epochs'])
-		parser.add_argument('--batch_size', type=dict, default=solver_confs['batch_size'])
 		parser.add_argument('--gpu', type=bool, default=torch.cuda.is_available(), help='*****')
 
 		criterion = nn.CrossEntropyLoss()
 		parser.add_argument('--criterion', type=type(criterion), default=criterion)
 
 		optim = solver_confs['optimizer']
-		optimizer = eval('torch.optim.'+optim['method'])(self.net.parameters(), lr=optim['lr'], momentum=optim['arg'])
+		optimizer = eval('torch.optim.'+optim['method'])(self.net.parameters(), optim['lr'], optim['arg'])
 		parser.add_argument('--optimizer', type=type(optimizer), default=optimizer)
 
 		# Decay LR by a factor of 0.1 every 7 epochs

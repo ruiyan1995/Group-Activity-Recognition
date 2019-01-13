@@ -177,20 +177,25 @@ class ResNet_LSTM(nn.Module):
 
         ####################################################
         x = x.view(x.size(0)/self.T, self.T, x.size(-1))
+        # get feas
         cnn_feas = x.contiguous()
-        #print 'cnn_feas dim:', cnn_feas.size()
+        #print 'cnn_feas:', cnn_feas.size()
 
         if self.do_LSTM:
             x, (h, c) = self.LSTM(x)
-            lstm_feas = x.contiguous()
-            #print 'lstm_feas dim:', lstm_feas.size()
             # get feas
+            lstm_feas = x.contiguous()
+            #print 'lstm_feas:', lstm_feas.size()
             feas = torch.cat((cnn_feas, lstm_feas), -1)
         else:
             # get feas
             feas = cnn_feas
 
+
+        
+        # get feas
         ##################################
+        feas = lstm_feas
         # (N, T, fea_dim)
         #print 'feas dim:', feas.size()
         feas = torch.transpose(feas, 0, 1)
@@ -199,11 +204,11 @@ class ResNet_LSTM(nn.Module):
         feas = feas.contiguous()
         feas = feas.view(feas.size(0), -1)
         ####################################################
-
+        
 
         x = self.fc(x)
         x = x.view(x.size(0)*x.size(1), -1)
-        #print 'output dim:', x.size()
+        #print 'output dim:', feas.size()
 
         return feas, x
 
@@ -242,10 +247,12 @@ def resnet50_LSTM(pretrained=False, **kwargs):
 
     if pretrained:
         model_dict = model.state_dict()
-        #pretrained_dict = torch.load('/home/ubuntu/MM/Run/Volleyball_CNN.pkl')
+        pretrained_dict = torch.load('/home/ubuntu/GAR/weights/VD/action/resnet50_LSTM.pkl')
+        '''
         pretrained_dict = model_zoo.load_url(model_urls['resnet50'])
         pretrained_dict = {k: v for k, v in pretrained_dict.items() if k.split('.')[
-            0] != 'fc'}
+            0] != 'fc'}'''
+
         #for k,v in pretrained_dict.items():
         #    print k.split('.')[0]
         model_dict.update(pretrained_dict)
