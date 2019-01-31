@@ -52,17 +52,12 @@ class Solver:
         else:
             _, preds = torch.max(outputs.data, 1)
 
-        # print 'outputs size:', outputs.size()
-        # print 'labels size:', labels.size()
-        # print outputs, labels
         loss = self.criterion(outputs, labels.values()[0])
-        # print loss
         # Backward + optimize(update parameters) only if in training phase
         if phase == 'trainval':
             loss.backward()
             self.optimizer.step()
-        # ? Why is [0]? I need to find source code of '_WeightLoss'
-        return preds, loss.data[0]
+        return preds, loss.item()
 
     def train_model(self):
         best_model_wts = self.net.state_dict()
@@ -119,10 +114,9 @@ class Solver:
                 print('Running this epoch in {:.0f}m {:.0f}s'.format(
                     time_elapsed // 60, time_elapsed % 60))
 
-    # deep copy the model
                 if phase == 'test' and epoch_acc > best_acc:
                     best_acc = epoch_acc
-                    #best_model_wts = model.state_dict()
+                    #best_model_wts = net.state_dict()
                     # deep copy the model
                     torch.save(self.net.state_dict(),
                                self.save_prefix + '.pkl')
