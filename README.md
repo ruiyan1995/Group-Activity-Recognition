@@ -22,6 +22,7 @@ This is the core part of GAR which need your design. We proposed a novel PCTDM t
 
 ## License and Citation 
 Please cite the following paper in your publications if it helps your research.
+
 @inproceedings{yan2018participation,  
 &nbsp;&nbsp;&nbsp;&nbsp;title={Participation-Contributed Temporal Dynamic Model for Group Activity Recognition},  
 &nbsp;&nbsp;&nbsp;&nbsp;author={Yan, Rui and Tang, Jinhui and Shu, Xiangbo and Li, Zechao and Tian, Qi},  
