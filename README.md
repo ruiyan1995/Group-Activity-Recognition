@@ -1,6 +1,6 @@
 # Participation-Contributed Temporal Dynamic Model for Group Activity Recognition.
 
-This repository includes the code of PCTDM and some baselines such as HDTM[1], Wang[2], impelemented by Pytorch. We give a general DMS code framework for Group Activity Recognition task. You can apply new model or new dataset into this framework easily! In 2019, I will clear up the code again! For further information about me, you can go to my [homepage](https://ruiyan1995.github.io/).
+This repository includes the code of PCTDM and some baselines such as HDTM[1], Wang[2], impelemented by Pytorch. We give a general DMS code framework for Group Activity Recognition task. You can apply new model or dataset into this framework easily! In 2019, I will clear up the code again! For further information about me, you can go to my [homepage](https://ruiyan1995.github.io/).
 
 
 ## The general piplines of GAR
@@ -20,9 +20,8 @@ This is the core part of GAR which need your design. We proposed a novel PCTDM t
 - For action features aggregation, you can use 
 - For activity recognition
 
-## License and Citation
-In case using our code framework, please site the following publication. 
-
+## License and Citation 
+Please cite the following paper in your publications if it helps your research.
 @inproceedings{yan2018participation,  
 &nbsp;&nbsp;&nbsp;&nbsp;title={Participation-Contributed Temporal Dynamic Model for Group Activity Recognition},  
 &nbsp;&nbsp;&nbsp;&nbsp;author={Yan, Rui and Tang, Jinhui and Shu, Xiangbo and Li, Zechao and Tian, Qi},  
