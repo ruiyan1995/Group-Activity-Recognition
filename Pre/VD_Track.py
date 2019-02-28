@@ -8,8 +8,7 @@ import numpy as np
 import cv2
 import sys
 sys.path.append('..')
-import Utils.utils as utils
-from Posture import *
+import utils
 
 
 class VD_Track(object):
