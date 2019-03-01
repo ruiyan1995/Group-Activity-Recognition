@@ -34,6 +34,8 @@ Please cite the following paper in your publications if it helps your research.
 &nbsp;&nbsp;&nbsp;&nbsp;year={2018},  
 &nbsp;&nbsp;&nbsp;&nbsp;organization={ACM}  
 }
+
+## Reference
 > [1] A Hierarchical Deep Temporal Model for Group Activity Recognition
 
 > [2] Recurrent Modeling of Interaction Context for Collective Activity Recognition
