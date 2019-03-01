@@ -2,7 +2,6 @@
 	Dataset_preprocessing
 """
 import Configs
-from VD_Semantic import *
 
 class Processing(object):
     """Preprocessing dataset, e.g., track, split and anonatation."""
