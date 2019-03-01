@@ -12,7 +12,7 @@ You can run `python GAR.py` to excute all the following steps.
 ### Step One: Action Level
 - To create a `Piplines` instance as:
 
-    `Action = Action_Level(dataset_root, dataset_name, 'trainval_action')`;
+&nbsp;&nbsp;`Action = Action_Level(dataset_root, dataset_name, 'trainval_action')`;
 - For action recognition, you can use `Action.trainval()`;
 - For extracting action features, you can use `Action.extract_feas(save_folder)`.
 
@@ -20,7 +20,7 @@ You can run `python GAR.py` to excute all the following steps.
 This is the core part of GAR which need your design. We proposed a novel PCTDM to aggreate the action features with attending to key persons.
 - To create a `Piplines` instance as:
 
-    `Activity = Activity_Level(dataset_root, dataset_name, 'trainval_activity')`;
+&nbsp;&nbsp;`Activity = Activity_Level(dataset_root, dataset_name, 'trainval_activity')`;
 - For activity recognition, you can use `Action.trainval()`.
 
 ## License and Citation 
