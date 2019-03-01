@@ -1,4 +1,4 @@
-# Participation-Contributed Temporal Dynamic Model for Group Activity Recognition.
+# Participation-Contributed Temporal Dynamic Model for Group Activity Recognition. [PDF](https://www.researchgate.net/profile/Rui_Yan31/publication/328372578_Participation-Contributed_Temporal_Dynamic_Model_for_Group_Activity_Recognition/links/5bed27684585150b2bb79e69/Participation-Contributed-Temporal-Dynamic-Model-for-Group-Activity-Recognition.pdf)
 
 This repository includes the code of PCTDM and some baselines such as HDTM[1], Wang[2], impelemented by Pytorch. We give a general DMS code framework for Group Activity Recognition task. You can apply new model or dataset into this framework easily! The scripts in 'Pre' may not work as expected, I will clear up the code as soon as possible! For further information about me, welcome to my [homepage](https://ruiyan1995.github.io/).
 
@@ -37,3 +37,5 @@ Please cite the following paper in your publications if it helps your research.
 > [1] A Hierarchical Deep Temporal Model for Group Activity Recognition
 
 > [2] Recurrent Modeling of Interaction Context for Collective Activity Recognition
+
+Feel free to create a pull request if you find any bugs. My email is ruiyan at njust dot edu dot cn
