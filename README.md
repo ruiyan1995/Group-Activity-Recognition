@@ -41,4 +41,4 @@ Please cite the following paper in your publications if it helps your research.
 > [2] Recurrent Modeling of Interaction Context for Collective Activity Recognition
 
 ## Contact Information
-Feel free to create a pull request if you find any bugs. Or contact me by Email = ["ruiyan", at, "njust", dot, "edu", dot, "cn"]
+Feel free to create a pull request or contact me by Email = ["ruiyan", at, "njust", dot, "edu", dot, "cn"], if you find any bugs. 
