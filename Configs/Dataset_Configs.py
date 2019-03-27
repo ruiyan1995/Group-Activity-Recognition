@@ -16,6 +16,7 @@ class Dataset_Configs(object):
             'VD': {
                 'num_players': 12,
                 'num_classes':{'action':9, 'activity':8},
+                'num_videos': 55,
                 'action_list': ['blocking', 'digging', 'falling', 'jumping', 'moving', 'setting', 'spiking', 'standing', 'waiting'],
                 'activity_list': ['l-pass', 'r-pass', 'l_set', 'r_set', 'l-spike', 'r_spike', 'l_winpoint', 'r_winpoint'],
                 'splits': {
@@ -28,8 +29,9 @@ class Dataset_Configs(object):
             'CAD': {
                 'num_players': 5,
                 'num_classes':{'action':5, 'activity':4},
-                'action_list': ['blocking', 'digging', 'falling', 'jumping', 'moving', 'setting', 'spiking', 'standing', 'waiting'],
-                'activity_list': ['l-pass', 'r-pass', 'l_set', 'r_set', 'l-spike', 'r_spike', 'l_winpoint', 'r_winpoint'],
+                'num_videos': 44,
+                'action_list': ['Walking', 'Crossing', 'Waiting', 'Queuing', 'Talking'],
+                'activity_list': ['Moving', 'Waiting', 'Queuing', 'Talking'],
                 'splits': {
                     'trainval': [7, 12, 13, 14, 15, 16, 17, 18, 19, 20,
                                  21, 22, 23, 24, 26, 27, 30, 31, 32, 33,
@@ -46,6 +48,8 @@ class Dataset_Configs(object):
                             default=dataset_confs['num_players'])
         parser.add_argument('--num_classes', type=dict,
                             default=dataset_confs['num_classes'])
+        parser.add_argument('--num_videos', type=dict,
+                            default=dataset_confs['num_videos'])
         parser.add_argument('--action_list', type=list,
                             default=dataset_confs['action_list'])
         parser.add_argument('--activity_list', type=list,
