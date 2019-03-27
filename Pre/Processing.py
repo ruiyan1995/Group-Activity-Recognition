@@ -2,6 +2,9 @@
 	Dataset_preprocessing
 """
 import Configs
+from VD_Track import *
+from CAD_Track import *
+from Rank_MI import *
 
 class Processing(object):
     """Preprocessing dataset, e.g., track, split and anonatation."""
@@ -13,11 +16,12 @@ class Processing(object):
 
         # Pre configs:
         dataset_confs = Configs.Dataset_Configs(dataset_root, dataset_name).configuring()
-        print dataset_confs
+        #print dataset_confs
         model_confs = Configs.Model_Configs(dataset_name, 'action').configuring()
-        # track or semantic
+        # track
         if operation == None:
-            print 'Please choose one of the operation! track or semantic...'
+            print 'Please choose one of the operation! Track...'
+        elif operation == 'rank':
+            Rank_MI(self.dataset_root, dataset_name, dataset_confs, model_confs)
         else:
-            eval(self.dataset_name + '_' +
-                 operation)(self.dataset_root, dataset_confs, model_confs)
+            eval(self.dataset_name + '_' + str.capitalize(operation))(self.dataset_root, dataset_confs, model_confs)
