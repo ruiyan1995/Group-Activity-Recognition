@@ -4,22 +4,21 @@ import torch.utils.model_zoo as model_zoo
 import torch.nn.functional as F
 import utils
 from torch.autograd import Variable
-__all__ = ['One_to_All', 'one_to_all']
+__all__ = ['PCTDM', 'pCTDM']
 
 
 
-class One_to_All(nn.Module):
+class pCTDM(nn.Module):
     def __init__(self, model_confs):
-        super(One_to_All, self).__init__()
-        self.input_size = 2048 + 3000
-        #self.input_size = 7096
+        super(pCTDM, self).__init__()
+        self.input_size = 7096
         self.hidden_size = 1000
         self.num_players = model_confs.num_players
         self.num_classes = model_confs.num_classes
         self.do_attention = False
         self.do_one_to_all = False
-        self.do_early_pooling = False
-        self.interaction = False
+        self.do_early_pooling = True
+        self.interaction = True
 
         if self.interaction:
             self.Bi_Lstm = nn.LSTM(self.input_size, self.hidden_size, num_layers = 1, batch_first = True, bidirectional=True)
@@ -103,8 +102,8 @@ class One_to_All(nn.Module):
         return x, out
 
 
-def one_to_all(pretrained=False, **kwargs):
-    model = One_to_All(**kwargs)
+def PCTDM(pretrained=False, **kwargs):
+    model = pCTDM(**kwargs)
     if pretrained:
         pretrained_dict = torch.load('/home/ubuntu/MM/models/ranked_one_to_all/best_test_acc.pkl')
         model.load_state_dict(pretrained_dict)
