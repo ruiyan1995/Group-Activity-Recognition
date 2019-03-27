@@ -4,13 +4,9 @@ class Activity_Level(Piplines):
 	def __init__(self, dataset_root, dataset_name, mode):
 		super(Activity_Level, self).__init__(dataset_root, dataset_name, 'activity', mode)
 
-		
-	def extractFeas(self, save_folder):
-		pass
-		print 'Done, the features files are saved at ' + save_folder + '\n'
 
-
-	def loadModel(self, model_confs):
-		net = Models.one_to_all(pretrained=False, model_confs=model_confs)
-		print net
+	def loadModel(self, pretrained=False):
+		if 'trainval' in self.mode:
+			pretrained=False
+			net = Models.PCTDM(pretrained=pretrained, model_confs=self.model_confs)
 		return net
