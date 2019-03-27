@@ -13,9 +13,13 @@ model_urls = {
 
 class AlexNet_LSTM(nn.Module):
 
-    def __init__(self, model_confs):
+    def __init__(self, model_confs, do_LSTM=True, do_Classify=True):
         super(AlexNet_LSTM, self).__init__()
-        self.do_LSTM = True
+        self.do_LSTM = do_LSTM
+        self.do_Classify = do_Classify
+        self.T = model_confs.num_frames
+        self.K = model_confs.num_players
+        
         self.features = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=11, stride=4, padding=2),
             nn.ReLU(inplace=True),
@@ -31,25 +35,29 @@ class AlexNet_LSTM(nn.Module):
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=3, stride=2),
         )
+        
         self.fc = nn.Sequential(
             nn.Dropout(0.5),
             nn.Linear(256 * 6 * 6, 4096),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.5),
-            nn.Linear(4096, 4096),
-            nn.ReLU(inplace=True),
+            #nn.Dropout(0.5),
+            #nn.Linear(4096, 4096),
+            #nn.ReLU(inplace=True),
         )
         if self.do_LSTM:
             self.LSTM = nn.LSTM(input_size=4096, hidden_size=3000, num_layers=1, batch_first=True)
-            self.classifier = nn.Linear(3000, model_confs.num_classes)
+            if self.do_Classify:
+                self.classifier = nn.Linear(3000, model_confs.num_classes)
         else:
-            self.classifier = nn.Linear(4096, model_confs.num_classes)
+            if self.do_Classify:
+                self.classifier = nn.Linear(4096, model_confs.num_classes)
     def forward(self, x):
         x = self.features(x)
         x = x.view(x.size(0), 256 * 6 * 6)
 
         x = self.fc(x)
-        x = x.view(x.size(0)/10, 10, x.size(1))
+        
+        x = x.view(x.size(0)/self.T, self.T, x.size(1))
         cnn_feas = x.contiguous()
 
         if self.do_LSTM:
@@ -60,19 +68,18 @@ class AlexNet_LSTM(nn.Module):
         else:
             # get feas
             feas = cnn_feas
-
-        ###########################################
+        #print 'cnn_lstm_feas:', feas.size()
+        
         feas = torch.transpose(feas, 0, 1)
         feas = feas.contiguous()
         feas = feas.view(feas.size(0),-1)
-        #print feas.size()
-        ###########################################
 
-        out = self.classifier(x)
-        out = out.view(out.size(0)*out.size(1),-1)
-
-        return feas, out
-        #return out
+        if self.do_Classify:
+            out = self.classifier(x)
+            out = out.view(out.size(0)*out.size(1),-1)
+            return feas, out
+        else:
+            return feas
 
 
 def alexNet_LSTM(pretrained=False, **kwargs):
@@ -85,9 +92,9 @@ def alexNet_LSTM(pretrained=False, **kwargs):
     model = AlexNet_LSTM(**kwargs)
     if pretrained:
         model_dict = model.state_dict()
-        pretrained_dict = torch.load('/home/ubuntu/MM/Run/VD_CNNLSTM.pkl')
-        #pretrained_dict = model_zoo.load_url(model_urls['alexnet'])
-        #pretrained_dict = {k: v for k, v in pretrained_dict.items() if k.split('.')[0] != 'classifier' }
+        #pretrained_dict = torch.load('/home/ubuntu/MM/Run/VD_CNNLSTM.pkl')
+        pretrained_dict = torch.load('./weights/VD/action/alexnet-owt-4df8aa71.pth')
+        pretrained_dict = {k: v for k, v in pretrained_dict.items() if k.split('.')[0] != 'classifier'}
         '''for k,v in pretrained_dict.items():
             print k.split('.')[0]'''
         model_dict.update(pretrained_dict)
