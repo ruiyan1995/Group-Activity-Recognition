@@ -26,54 +26,6 @@ def load_pkl(name):
     with open(name + '.pkl', 'rb') as f:
         return pickle.load(f)
 
-def get_mask(img, candidate, scale=5):
-    mask = np.ones((img.size[1], img.size[0]))
-    for joint_coords in candidate:
-        #print joint_coords
-        #(x, y) = min(tuple(joint_coords[0:2].astype(int)-scale),0)
-        #(x_, y_) = tuple(joint_coords[0:2].astype(int)+scale)
-        x = max(joint_coords[0]-scale, 0)
-        y = max(joint_coords[1]-scale, 0)
-        x_ = min(joint_coords[0]+scale, img.size[0])
-        y_ = min(joint_coords[1]+scale, img.size[1])
-        mask[y:y_,x:x_]=0
-    return mask
-
-def get_partial_body(img, mask):
-    person_img = img.copy()
-    sub_img = Image.fromarray(np.uint8(255*np.zeros((person_img.size[1], person_img.size[0], 3))))
-    mask = Image.fromarray(np.uint8(255*(mask)))
-    person_img.paste(sub_img, (0, 0), mask)
-    return person_img
-'''
-def evaluate(preds, labels, show=False):
-    preds, labels = preds.reshape(-1, 1), labels.reshape(-1, 1)
-    print("Classification report for classifier \n %s" %
-          (metrics.classification_report(labels, preds)))
-    print("Confusion matrix:\n%s" % normlize(
-        metrics.confusion_matrix(labels, preds)))
-    print np.sum(preds == labels), preds.shape, labels.shape
-    print np.sum(preds == labels) / float(labels.shape[0])
-
-    # Compute confusion matrix
-    cnf_matrix = metrics.confusion_matrix(labels, preds)
-    print cnf_matrix
-    if show:
-        np.set_printoptions(precision=2)
-
-        plt.rc('text', usetex=True)
-        plt.rc('font', family='serif')
-        # Plot non-normalized confusion matrix
-        plt.figure()
-        plot_confusion_matrix(cnf_matrix, classes=class_names)
-
-        # Plot normalized confusion matrix
-        plt.figure()
-        plot_confusion_matrix(cnf_matrix, classes=class_names, normalize=True)
-
-        plt.show()
-'''
-
 def write_txt(txtFile, content_str, mode):
     with open(txtFile, mode) as f:
         f.write(content_str)
