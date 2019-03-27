@@ -11,13 +11,13 @@ class Model_Configs(object):
 		self.confs_dict = {
 			'VD':{
 				'num_frames': 10,
-				'num_classes':{'action':9, 'activity':8, 'semantic':8},
+				'num_classes':{'action':9, 'activity':8},
 				'num_players': 12,
 				'num_groups': 2,
 			},
 			'CAD':{
 				'num_frames': 10,
-				'num_classes':{'action':5, 'activity':4, 'semantic':4},
+				'num_classes':{'action':5, 'activity':4},
 				'num_players': 5,
 				'num_groups': 1,
 			}
