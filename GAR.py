@@ -51,3 +51,10 @@ print('Extracting action_feas {} in {:.0f}m {:.0f}s'.format(opt.dataset_name,
 # Step Two: Group activity recognition
 Activity = Runtime.Activity_Level(opt.dataset_root, opt.dataset_name, 'trainval_activity')
 Activity.trainval()
+
+
+# Step Two: Evaluate
+dataset_size = 1337 if opt.dataset_name == 'VD' else 621
+since = time.time()
+Activity.evaluate()
+print 'infer one sequence, takes', (time.time()-since)/dataset_size, 's'
