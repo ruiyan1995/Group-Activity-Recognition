@@ -13,7 +13,7 @@ You can run `python GAR.py` to excute all the following steps.
 ### Step Zero: Preprocessing dataset
 - To download [VD](https://github.com/mostafa-saad/deep-activity-rec#dataset) and [CAD](http://vhosts.eecs.umich.edu/vision//activity-dataset.html) at './dataset/VD' and './dataset/CAD' folder;
 - add `none.jpg`
-- To track the persons in video by Dlib, which implemented in **Preprocessing.py**;
+- To track the persons and generate the train/test files by using **Preprocessing.py**;
 
 ### Step One: Action Level
 - To create a `Piplines` instance as:
@@ -33,7 +33,7 @@ This is the core part of GAR which need your design. We proposed a novel PCTDM t
 &nbsp;&nbsp;`eval = Evaluate()`
 - For show result, you can use `eval.show()`.
 
-All steps may take 1 day for 'VD', and 0.5 day for 'CAD'
+All steps may take 15h for 'VD', and 5h for 'CAD'
 
 ## License and Citation 
 Please cite the following paper in your publications if it helps your research.
