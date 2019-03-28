@@ -9,6 +9,8 @@ import sys
 from torch.optim import lr_scheduler
 import h5py
 import utils
+import torch.nn.functional as F
+from sklearn import datasets, svm, metrics
 
 class Solver:
     def __init__(self, net, model_confs, solver_confs):
@@ -93,28 +95,29 @@ class Solver:
 
                 if phase == 'test' and epoch_acc > best_acc:
                     best_acc = epoch_acc
-                    torch.save(self.net.state_dict(),
-                               self.save_path + 'best_wts.pkl')
+                    torch.save(self.net.state_dict(),os.path.join(self.save_path, 'best_wts.pkl'))
         print('Best test Acc: {:4f}'.format(best_acc))
 
         
     def evaluate(self):
+        preds = []
+        targets = []
         with torch.no_grad():
             for i, data in enumerate(self.data_loaders['test']):
-                inputs = data[0].cuda()
+                inputs = data[0].float().cuda()
                 target = data[1][0]
                 # compute output
-                _, outputs = self.model(inputs)
+                _, outputs = self.net(inputs)
                 probs = F.softmax(outputs.data)
                 #print probs
                 _, pred = torch.max(torch.mean(outputs.data, 0).view(1, -1), 1)
-                self.preds.append(pred.cpu().numpy())
-                self.targets.append(target)
+                preds.append(pred.cpu().numpy())
+                targets.append(target)
 
         ### show result
-        preds = np.asarray(self.preds, dtype=int)
+        preds = np.asarray(preds, dtype=int)
         #preds = label_map(preds)
-        targets = np.asarray(self.targets, dtype=int)
+        targets = np.asarray(targets, dtype=int)
         #labels = label_map(labels)
         preds, targets = preds.reshape(-1,1), targets.reshape(-1,1)
         
