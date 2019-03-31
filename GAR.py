@@ -22,7 +22,7 @@ print 'Please wait for tracking! about 240min for VD'
 track_since = time.time()
 Pre.Processing(opt.dataset_root, opt.dataset_name, 'track')
 print('Tracking {} in {:.0f}m {:.0f}s'.format(opt.dataset_name,
-            (time.time() - track_since) // 60, time_elapsed % 60))
+            (time.time() - track_since) // 60, (time.time() - track_since) % 60))
 
 print 'Please wait for ranking!  about 180min for VD'
 rank_since = time.time()
