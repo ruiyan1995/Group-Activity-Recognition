@@ -5,9 +5,13 @@ This repository includes the code of PCTDM and some baselines such as HDTM[1], W
 
 ## Requirements
 OS: > Ubuntu 16.04
+
 pytorch 0.4.1
+
 python 2.7
+
 pip install dlib
+
 ## The general piplines of GAR
 You can run `python GAR.py` to excute all the following steps.
 ### Step Zero: Preprocessing dataset
