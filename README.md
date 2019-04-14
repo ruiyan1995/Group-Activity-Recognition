@@ -1,6 +1,6 @@
 # Participation-Contributed Temporal Dynamic Model for Group Activity Recognition. [PDF](https://www.researchgate.net/profile/Rui_Yan31/publication/328372578_Participation-Contributed_Temporal_Dynamic_Model_for_Group_Activity_Recognition/links/5bed27684585150b2bb79e69/Participation-Contributed-Temporal-Dynamic-Model-for-Group-Activity-Recognition.pdf)
 
-We give a general **DMS**(**D**ata, **M**odel, **S**olver) code framework for PCTDM, impelemented by Pytorch. You can apply new model or dataset into this framework easily! For further information about me, welcome to my [homepage](https://ruiyan1995.github.io/).
+We give a general **DMS**(**D**ata, **M**odel, **S**olver) code framework for PCTDM, impelemented by Pytorch. You can apply new model or dataset into this framework by modifying the files in `Configs` easily! For further information about me, welcome to my [homepage](https://ruiyan1995.github.io/).
 
 
 ## Requirements
