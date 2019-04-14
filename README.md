@@ -31,19 +31,18 @@ This is the core part of GAR which need your design. We proposed a novel PCTDM t
 - To create a `Piplines` instance as:
 
 &nbsp;&nbsp;`Activity = Activity_Level(dataset_root, dataset_name, 'trainval_activity')`;
-- For activity recognition, you can use `Action.trainval()`.
+- For activity recognition, you can use `Activity.trainval()`.
 
 ### Step Three: Evaluate
-&nbsp;&nbsp;`eval = Evaluate()`
-- For show result, you can use `eval.show()`.
+- For show result, you can use `Activity.evaluate()`.
 
-All steps may take 15h for 'VD', and 5h for 'CAD'
+All steps may take about 15 hours for 'VD', and 5 hours for 'CAD'.
 
 ## License and Citation 
 Please cite the following paper in your publications if it helps your research.
 
 @inproceedings{yan2018participation,  
-&nbsp;&nbsp;&nbsp;&nbsp;title={Participation-Contributed Temporal Dynamic Model for Group Activity Recognition},  
+&nbsp;&nbsp;&nbsp;&nbsp;title={Participation-Contributed Temporal Dynamic Model for Group Activity Recognition},
 &nbsp;&nbsp;&nbsp;&nbsp;author={Yan, Rui and Tang, Jinhui and Shu, Xiangbo and Li, Zechao and Tian, Qi},  
 &nbsp;&nbsp;&nbsp;&nbsp;booktitle={2018 ACM Multimedia Conference on Multimedia Conference},  
 &nbsp;&nbsp;&nbsp;&nbsp;pages={1292--1300},  
