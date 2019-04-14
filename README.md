@@ -1,6 +1,6 @@
 # Participation-Contributed Temporal Dynamic Model for Group Activity Recognition. [PDF](https://www.researchgate.net/profile/Rui_Yan31/publication/328372578_Participation-Contributed_Temporal_Dynamic_Model_for_Group_Activity_Recognition/links/5bed27684585150b2bb79e69/Participation-Contributed-Temporal-Dynamic-Model-for-Group-Activity-Recognition.pdf)
 
-This repository includes the code of PCTDM and some baselines such as HDTM[1], Wang[2], impelemented by Pytorch. We give a general DMS code framework for Group Activity Recognition task. You can apply new model or dataset into this framework easily! The scripts in 'Pre' may not work as expected, I will clear up the code as soon as possible! For further information about me, welcome to my [homepage](https://ruiyan1995.github.io/).
+We give a general **DMS**(**D**ata, **M**odel, **S**olver) code framework for PCTDM, impelemented by Pytorch. You can apply new model or dataset into this framework easily! For further information about me, welcome to my [homepage](https://ruiyan1995.github.io/).
 
 
 ## Requirements
@@ -16,7 +16,7 @@ pip install dlib
 You can run `python GAR.py` to excute all the following steps.
 ### Step Zero: Preprocessing dataset
 - To download [VD](https://github.com/mostafa-saad/deep-activity-rec#dataset) and [CAD](http://vhosts.eecs.umich.edu/vision//activity-dataset.html) at './dataset/VD' and './dataset/CAD' folder;
-- add `none.jpg`
+- Add `none.jpg`
 - To track the persons and generate the train/test files by using **Preprocessing.py**;
 
 ### Step One: Action Level
@@ -50,11 +50,6 @@ Please cite the following paper in your publications if it helps your research.
 &nbsp;&nbsp;&nbsp;&nbsp;year={2018},  
 &nbsp;&nbsp;&nbsp;&nbsp;organization={ACM}
 }
-
-## Reference
-> [1] A Hierarchical Deep Temporal Model for Group Activity Recognition
-
-> [2] Recurrent Modeling of Interaction Context for Collective Activity Recognition
 
 ## Contact Information
 Feel free to create a pull request or contact me by Email = ["ruiyan", at, "njust", dot, "edu", dot, "cn"], if you find any bugs. 
