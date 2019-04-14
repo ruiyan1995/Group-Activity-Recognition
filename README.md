@@ -34,7 +34,7 @@ This is the core part of GAR which need your design. We proposed a novel PCTDM t
 - For activity recognition, you can use `Activity.trainval()`.
 
 ### Step Three: Evaluate
-- For show result, you can use `Activity.evaluate()`.
+- To show some results at activity level, you can use `Activity.evaluate()`.
 
 All steps may take about 15 hours for 'VD', and 5 hours for 'CAD'.
 
