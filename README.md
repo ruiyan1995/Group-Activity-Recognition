@@ -47,8 +47,7 @@ Please cite the following paper in your publications if it helps your research.
 &nbsp;&nbsp;&nbsp;&nbsp;booktitle={2018 ACM Multimedia Conference on Multimedia Conference},  
 &nbsp;&nbsp;&nbsp;&nbsp;pages={1292--1300},  
 &nbsp;&nbsp;&nbsp;&nbsp;year={2018},  
-&nbsp;&nbsp;&nbsp;&nbsp;organization={ACM}
-
+&nbsp;&nbsp;&nbsp;&nbsp;organization={ACM}  
 }
 
 ## Contact Information
