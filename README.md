@@ -4,12 +4,9 @@ We give a general **DMS**(**D**ata, **M**odel, **S**olver) code framework for PC
 
 
 ## Requirements
-OS: > Ubuntu 16.04
-
-pytorch 0.4.1
-
-python 2.7
-
+OS: > Ubuntu 16.04  
+pytorch 0.4.1  
+python 2.7  
 pip install dlib
 
 ## The general piplines of GAR
