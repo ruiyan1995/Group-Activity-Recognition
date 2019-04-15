@@ -43,9 +43,7 @@ Please cite the following paper in your publications if it helps your research.
 
 @inproceedings{yan2018participation,  
 &nbsp;&nbsp;&nbsp;&nbsp;title={Participation-Contributed Temporal Dynamic Model for Group Activity Recognition},
-
 &nbsp;&nbsp;&nbsp;&nbsp;author={Yan, Rui and Tang, Jinhui and Shu, Xiangbo and Li, Zechao and Tian, Qi},
-
 &nbsp;&nbsp;&nbsp;&nbsp;booktitle={2018 ACM Multimedia Conference on Multimedia Conference},  
 &nbsp;&nbsp;&nbsp;&nbsp;pages={1292--1300},  
 &nbsp;&nbsp;&nbsp;&nbsp;year={2018},  
