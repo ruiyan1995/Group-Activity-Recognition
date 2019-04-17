@@ -17,7 +17,7 @@ class Action_Level(Piplines):
     def extractFeas(self):
         # args
         self.net.eval()
-        self.net.load_state_dict(torch.load('./weights/VD/action/action.pkl'))
+        self.net.load_state_dict(torch.load('./weights/VD/action/best_wts.pkl'))
         dataset_confs = Configs.Dataset_Configs(self.dataset_root, self.dataset_name).configuring()
         K = dataset_confs.num_players
         feas_size = 7096
