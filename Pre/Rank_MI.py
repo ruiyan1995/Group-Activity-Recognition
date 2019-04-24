@@ -18,9 +18,6 @@ class Rank_MI(object):
         self.num_videos = dataset_confs.num_videos
         #print self.imgs_folder, self.ranked_folder
         self.rank()
-        txts = glob.glob(os.path.join(self.imgs_folder, "*.txt"))
-        for txt in txts:
-            self.copy_files(txt, os.path.join(self.ranked_folder, txt.split('/')[-1]))
         
 
     def rank(self):
