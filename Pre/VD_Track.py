@@ -3,13 +3,18 @@ import os
 import glob
 import utils
 from Track import *
+from Rank_MI import *
 
 class VD_Track(Track):
     """docstring for VD_Preprocess"""
-    def __init__(self, dataset_root, dataset_confs, model_confs=None):
+    def __init__(self, dataset_root, dataset_confs, model_confs=None, ranked=False):
         super(VD_Track, self).__init__(dataset_root, dataset_confs, 'VD', model_confs)
         # track the persons
         self.getPersons()
+        # rank by MI
+        if ranked:
+            self.save_folder = os.path.join(dataset_root, 'VD', 'imgs_ranked')
+            Rank_MI(dataset_root, 'VD', dataset_confs, model_confs)
         # write the train_test file
         self.getTrainTest()
 
@@ -41,7 +46,6 @@ class VD_Track(Track):
         
 
     def getTrainTest(self):
-
         # split train-test following [CVPR 16]
         dataset_config={'trainval':self.trainval_videos,'test':self.test_videos}
         dataList={'trainval':[],'test':[]}
