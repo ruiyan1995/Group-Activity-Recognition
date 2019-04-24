@@ -18,17 +18,11 @@ opt = parser.parse_args()
 
 
 # Step Zero: Dataset Preprocessing
-print 'Please wait for tracking! about 240min for VD'
+print 'Please wait for tracking and ranking! about 240min + 180min'
 track_since = time.time()
-Pre.Processing(opt.dataset_root, opt.dataset_name, 'track')
-print('Tracking {} in {:.0f}m {:.0f}s'.format(opt.dataset_name,
+Pre.Processing(opt.dataset_root, opt.dataset_name, operation='track')
+print('Tracking and ranking {} in {:.0f}m {:.0f}s'.format(opt.dataset_name,
             (time.time() - track_since) // 60, (time.time() - track_since) % 60))
-
-print 'Please wait for ranking!  about 180min for VD'
-rank_since = time.time()
-Pre.Processing(opt.dataset_root, opt.dataset_name, 'rank')
-print('Ranking {} in {:.0f}m {:.0f}s'.format(opt.dataset_name,
-            (time.time() - rank_since) // 60, (time.time() - rank_since) % 60))
 
 
 # Step One: action recognition
