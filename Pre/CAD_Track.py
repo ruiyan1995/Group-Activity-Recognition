@@ -5,16 +5,22 @@ import numpy as np
 import sys
 import utils
 from Track import *
+from Rank_MI import *
 
 class CAD_Track(Track):
     """docstring for CAD_Track"""
-    def __init__(self, dataset_root, dataset_confs, model_confs=None):
+    def __init__(self, dataset_root, dataset_confs, model_confs=None, ranked=False):
         super(CAD_Track, self).__init__(dataset_root, dataset_confs, 'CAD', model_confs)
         # modify the annotation_file
-        #self.modify()
+        self.modify()
 
         # track the persons
-        #self.getPersons()
+        self.getPersons()
+        
+        # rank by MI
+        if ranked:
+            self.save_folder = os.path.join(dataset_root, 'VD', 'imgs_ranked')
+            Rank_MI(dataset_root, 'VD', dataset_confs, model_confs)
 
         # write the train_test file
         self.getTrainTest()
