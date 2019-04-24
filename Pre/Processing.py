@@ -4,6 +4,7 @@
 import Configs
 from VD_Track import *
 from CAD_Track import *
+from VD_Semantic import *
 from Rank_MI import *
 
 class Processing(object):
@@ -20,8 +21,6 @@ class Processing(object):
         model_confs = Configs.Model_Configs(dataset_name, 'action').configuring()
         # track
         if operation == None:
-            print 'Please choose one of the operation! Track...'
-        elif operation == 'rank':
-            Rank_MI(self.dataset_root, dataset_name, dataset_confs, model_confs)
+            print 'Please choose one of the operation! Track'
         else:
-            eval(self.dataset_name + '_' + str.capitalize(operation))(self.dataset_root, dataset_confs, model_confs)
+            eval(self.dataset_name + '_' + str.capitalize(operation))(self.dataset_root, dataset_confs, model_confs, True)
