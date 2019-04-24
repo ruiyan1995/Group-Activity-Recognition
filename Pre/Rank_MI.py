@@ -17,7 +17,7 @@ class Rank_MI(object):
         self.num_groups = model_confs.num_groups
         self.num_videos = dataset_confs.num_videos
         #print self.imgs_folder, self.ranked_folder
-        #self.rank()
+        self.rank()
         txts = glob.glob(os.path.join(self.imgs_folder, "*.txt"))
         for txt in txts:
             self.copy_files(txt, os.path.join(self.ranked_folder, txt.split('/')[-1]))
@@ -33,7 +33,7 @@ class Rank_MI(object):
                     #save_folder = self.ranked_folder + keys[-2] + '/' + keys[-1]
                     save_folder = os.path.join(self.ranked_folder, keys[-2], keys[-1])
                     print clips_folder, save_folder
-                    #self.ranking(clips_folder, save_folder, N_g = self.num_groups)
+                    self.ranking(clips_folder, save_folder, N_g = self.num_groups)
 
 
     def calc_Motion_Intensity(self, imgs):
