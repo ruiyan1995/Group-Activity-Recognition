@@ -7,7 +7,7 @@ from Rank_MI import *
 
 class VD_Track(Track):
     """docstring for VD_Preprocess"""
-    def __init__(self, dataset_root, dataset_confs, model_confs=None, ranked=False):
+    def __init__(self, dataset_root, dataset_confs, model_confs, ranked=False):
         super(VD_Track, self).__init__(dataset_root, dataset_confs, 'VD', model_confs)
         # track the persons
         self.getPersons()
