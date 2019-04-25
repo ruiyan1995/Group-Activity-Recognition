@@ -9,7 +9,7 @@ from Rank_MI import *
 
 class CAD_Track(Track):
     """docstring for CAD_Track"""
-    def __init__(self, dataset_root, dataset_confs, model_confs=None, ranked=False):
+    def __init__(self, dataset_root, dataset_confs, model_confs, ranked=False):
         super(CAD_Track, self).__init__(dataset_root, dataset_confs, 'CAD', model_confs)
         # modify the annotation_file
         self.modify()
