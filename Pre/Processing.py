@@ -4,7 +4,6 @@
 import Configs
 from VD_Track import *
 from CAD_Track import *
-from VD_Semantic import *
 from Rank_MI import *
 
 class Processing(object):
