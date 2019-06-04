@@ -107,7 +107,7 @@ class CAD_Track(Track):
 
 
     def getPersons(self):
-        for video_id in range(1, 10):
+        for video_id in range(1, self.num_videos+1):
             self.joints_dict = {}
             video_folder = os.path.join(self.dataset_folder, 'seq'+ '%02d'%video_id)
             video_id = str(video_id)
