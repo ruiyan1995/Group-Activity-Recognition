@@ -19,8 +19,8 @@ class CAD_Track(Track):
         
         # rank by MI
         if ranked:
-            self.save_folder = os.path.join(dataset_root, 'VD', 'imgs_ranked')
-            Rank_MI(dataset_root, 'VD', dataset_confs, model_confs)
+            self.save_folder = os.path.join(dataset_root, 'CAD', 'imgs_ranked')
+            Rank_MI(dataset_root, 'CAD', dataset_confs, model_confs)
 
         # write the train_test file
         self.getTrainTest()
