@@ -15,8 +15,8 @@ class pCTDM(nn.Module):
         self.hidden_size = 1000
         self.num_players = model_confs.num_players
         self.num_classes = model_confs.num_classes
-        self.do_attention = False
-        self.do_one_to_all = False
+        self.do_attention = True
+        self.do_one_to_all = True
         self.do_early_pooling = True
         self.interaction = True
 
