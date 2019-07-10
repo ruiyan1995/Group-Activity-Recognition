@@ -30,23 +30,6 @@ def write_txt(txtFile, content_str, mode):
     with open(txtFile, mode) as f:
         f.write(content_str)
 
-def annotation_parse(line, action_list=[], activity_list=[]):
-    keywords = deque(line.strip().split(' '))
-    frame_id = keywords.popleft().split('.')[0]
-    activity = activity_list.index(keywords.popleft())
-    Rects = []
-    while keywords:
-        x = int(keywords.popleft())
-        y = int(keywords.popleft())
-        w = int(keywords.popleft())
-        h = int(keywords.popleft())
-        action = action_list.index(keywords.popleft())
-        Rects.append([x,y,w,h,action,activity])
-    Rects = np.asarray(Rects)
-    # sort Rects by the first col
-    Rects = Rects[np.lexsort(Rects[:,::-1].T)]
-    return frame_id, Rects
-
 
 def exp_lr_scheduler(optimizer, epoch, init_lr=0.001, lr_decay_epoch=100):
     """Decay learning rate by a factor of 0.1 every lr_decay_epoch epochs."""

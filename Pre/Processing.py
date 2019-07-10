@@ -9,7 +9,7 @@ from Rank_MI import *
 class Processing(object):
     """Preprocessing dataset, e.g., track, split and anonatation."""
 
-    def __init__(self, dataset_root, dataset_name, operation=None):
+    def __init__(self, dataset_root, dataset_name, operation=None, ranked=False):
         super(Processing, self).__init__()
         self.dataset_root = dataset_root
         self.dataset_name = dataset_name
@@ -22,4 +22,4 @@ class Processing(object):
         if operation == None:
             print 'Please choose one of the operation! Track'
         else:
-            eval(self.dataset_name + '_' + str.capitalize(operation))(self.dataset_root, dataset_confs, model_confs, True)
+            eval(self.dataset_name + '_' + str.capitalize(operation))(self.dataset_root, dataset_confs, model_confs, ranked)

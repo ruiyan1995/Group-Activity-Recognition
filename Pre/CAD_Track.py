@@ -70,9 +70,6 @@ class CAD_Track(Track):
                     break
                 anno_str = sep + str(x) + sep + str(y) + sep + str(w) + sep + str(h) + sep + str(action)
 
-                '''if frame_id == cur_frameId:
-                    action_label_count[action_label] += 1 
-                    content_str = content_str + anno_str'''
                 if frame_id != cur_frameId:
                     activity = np.argmax(action_count)
                     content_str = str(cur_frameId) + sep + str(activity) + content_str + '\n'
@@ -99,7 +96,7 @@ class CAD_Track(Track):
             print video_folder
             file = os.path.join(video_folder, 'annotations.txt')
             num_clips = self.modify_annotation(file)
-            if video_id in self.trainval_videos:
+            if video_id in self.videos['trainval']:
                 total_train += num_clips
             else:
                 total_test += num_clips
@@ -108,19 +105,17 @@ class CAD_Track(Track):
 
     def getPersons(self):
         for video_id in range(1, self.num_videos+1):
-            self.joints_dict = {}
             video_folder = os.path.join(self.dataset_folder, 'seq'+ '%02d'%video_id)
             video_id = str(video_id)
             annotation_file = os.path.join(video_folder, 'annotations_new.txt')
             lines = open(annotation_file).readlines()
             img_list = sorted(glob.glob(os.path.join(video_folder, "*.jpg")))
             #print video_id, len(img_list)
-
+            imgs={}
             for line in lines:
                 frame_id, rects = self.annotation_parse(line)
-                imgs={}
                 if int(frame_id) + 4 <=len(img_list) and int(frame_id)-5>0:
-                    print video_id, frame_id
+                    print 'video_id: ', video_id, 'frame_id: ', frame_id
                     clip_list = img_list[int(frame_id)-6:int(frame_id)+4]
                     imgs['pre'] = clip_list[:5][::-1]
                     imgs['back'] = clip_list[4:]
@@ -130,21 +125,17 @@ class CAD_Track(Track):
                         os.makedirs(save_path)
                         # We will track the frames as we load them off of disk
                         self.track(rects, imgs, self.tracker, save_path)
-            utils.save_pkl(self.joints_dict, os.path.join(self.save_folder, 'pose_'+video_id))
 
 
     def getTrainTest(self):
-        dataset_config={'trainval':self.trainval_videos,'test':self.test_videos}
-        dataList={'trainval':[],'test':[]}
-        activity_label_list = {'trainval':[],'test':[]}
-
-        print 'trainval_videos:', dataset_config['trainval']
-        print 'test_videos:', dataset_config['test']
-        for phase in ['trainval','test']:
+        
+        for phase in self.phases:
+            print phase + ' videos:', self.videos[phase]
             action_list = []
-            for idx in dataset_config[phase]:
-                video_path = os.path.join(self.save_folder, str(idx))
-                for root, dirs, files in os.walk(video_path):
+            activity_list = []
+            for idx in self.videos[phase]:
+                imgs_folder = os.path.join(self.save_folder, str(idx))
+                for root, dirs, files in os.walk(imgs_folder):
                     activity_label = ''
                     if len(files)!=0:                       
                         files.sort()
@@ -166,18 +157,13 @@ class CAD_Track(Track):
                                 elif int(activity_label) == 4:
                                     activity_label = str(3)
                                 
-                                
-                                content_str = root + '/' + filename + '\t' + action_label + '\n'
-                                action_list.append(content_str)
-                                content_str = root + '/' + filename + '\t' + activity_label + '\n'
-                                activity_list.append(content_str)
+                                action_list.append(root + '/' + filename + '\t' + action_label + '\n')
+                                activity_list.append(root + '/' + filename + '\t' + activity_label + '\n')
                             else:
                                 # add none.jpg
-                                filename = os.path.join(self.save_folder, 'none.jpg')
-                                content_str = filename + '\t' + 'error' + '\n'
-                                action_list.append(content_str)
-                                content_str = filename + '\t' + activity_label + '\n'
-                                activity_list.append(content_str)
+                                filename = os.path.join(self.dataset_root, 'none.jpg')
+                                action_list.append(filename + '\t' + 'error' + '\n')
+                                activity_list.append(filename + '\t' + activity_label + '\n')
             
             self.write_list(action_list, self.num_frames, 'action', phase)
             self.write_list(activity_list, self.num_frames*self.num_players, 'activity', phase)

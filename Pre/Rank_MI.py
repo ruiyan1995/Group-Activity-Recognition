@@ -27,10 +27,12 @@ class Rank_MI(object):
                 if len(files)!=0:
                     keys = root.split('/')
                     clips_folder = root
-                    #save_folder = self.ranked_folder + keys[-2] + '/' + keys[-1]
                     save_folder = os.path.join(self.ranked_folder, keys[-2], keys[-1])
-                    print clips_folder, save_folder
-                    self.ranking(clips_folder, save_folder, N_g = self.num_groups)
+                    if not os.path.exists(save_folder):
+                        print clips_folder, save_folder
+                        self.ranking(clips_folder, save_folder, N_g = self.num_groups)
+                    else:
+                        print "%s exist!" % (save_folder)
 
 
     def calc_Motion_Intensity(self, imgs):
@@ -44,7 +46,6 @@ class Rank_MI(object):
             Sum_stack_flow[...,0] += abs(flow[...,0])
             Sum_stack_flow[...,0] += abs(flow[...,1])
         Motion_Intensity = np.sum(Sum_stack_flow)/(256*256)
-        #print Motion_Intensity
         return Motion_Intensity
 
     def copy_files(self, srcfile, targetfile):
@@ -64,15 +65,10 @@ class Rank_MI(object):
         imgs.sort()
         Motion_Intensity = np.zeros(len(imgs)/10)
         Ranked_idx = np.zeros(len(imgs)/10, dtype = int)
-        #print imgs
         for k in xrange(len(imgs)/10):
-            #print imgs[k*10:(k+1)*10]
             Motion_Intensity[k] = self.calc_Motion_Intensity(imgs[k*10:(k+1)*10])
         
         # rank motion_intensity
-        #Ranked_idx = sorted(range(len(Motion_Intensity)),key=lambda k:Motion_Intensity[k])
-        #Ranked_idx.reverse()
-        #print Ranked_idx
         if N_g:
             K = 12
             for g in xrange(N_g):
@@ -87,7 +83,7 @@ class Rank_MI(object):
         else:
             Ranked_idx = sorted(range(len(Motion_Intensity)),key=lambda k:Motion_Intensity[k])
             Ranked_idx.reverse()
-        #print Motion_Intensity, Ranked_idx
+
         # rewrite imgs by the ranked_idx
         print 'copying %s'%(clips_folder)
         for k in Ranked_idx:
@@ -97,5 +93,4 @@ class Rank_MI(object):
                 activity = int(src_img.split('/')[-1].split('_')[-1].split('.')[0])
                 target_img = os.path.join(save_folder,"%04d_%d_%d.jpg"%(idx, action, activity))
                 idx +=1
-                #print src_img, target_img
                 self.copy_files(src_img, target_img)

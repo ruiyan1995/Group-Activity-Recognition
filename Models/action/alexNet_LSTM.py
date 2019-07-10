@@ -1,7 +1,7 @@
 import torch.nn as nn
 import torch
 import torch.utils.model_zoo as model_zoo
-
+import os
 
 __all__ = ['AlexNet_LSTM', 'alexNet_LSTM']
 
@@ -82,7 +82,7 @@ class AlexNet_LSTM(nn.Module):
             return feas
 
 
-def alexNet_LSTM(pretrained=False, **kwargs):
+def alexNet_LSTM(pretrained=False, dataset_name=None, **kwargs):
     r"""AlexNet model architecture from the
     `"One weird trick..." <https://arxiv.org/abs/1404.5997>`_ paper.
 
@@ -93,7 +93,11 @@ def alexNet_LSTM(pretrained=False, **kwargs):
     if pretrained:
         model_dict = model.state_dict()
         #pretrained_dict = torch.load('/home/ubuntu/MM/Run/VD_CNNLSTM.pkl')
-        pretrained_dict = torch.load('./weights/VD/action/alexnet-owt-4df8aa71.pth')
+        model_dict_file = './weights/'+dataset_name+'/action/alexnet-owt-4df8aa71.pth'
+        if os.path.exists(model_dict_file):
+            pretrained_dict = torch.load(model_dict_file)
+        else:
+            pretrained_dict = model_zoo.load_url(model_urls['alexnet'])
         pretrained_dict = {k: v for k, v in pretrained_dict.items() if k.split('.')[0] != 'classifier'}
         '''for k,v in pretrained_dict.items():
             print k.split('.')[0]'''

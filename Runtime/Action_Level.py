@@ -11,13 +11,13 @@ class Action_Level(Piplines):
     def loadModel(self, pretrained=False):
         if 'trainval'in self.mode:
             pretrained=True
-        net = Models.alexNet_LSTM(pretrained, model_confs=self.model_confs)
+        net = Models.alexNet_LSTM(pretrained, self.dataset_name, model_confs=self.model_confs)
         return net
 
     def extractFeas(self):
         # args
         self.net.eval()
-        self.net.load_state_dict(torch.load('./weights/VD/action/best_wts.pkl'))
+        self.net.load_state_dict(torch.load('./weights/'+self.dataset_name+'/action/best_wts.pkl'))
         dataset_confs = Configs.Dataset_Configs(self.dataset_root, self.dataset_name).configuring()
         K = dataset_confs.num_players
         feas_size = 7096
@@ -30,8 +30,12 @@ class Action_Level(Piplines):
                 data_loader = self.data_loaders[phase]
                 print phase, dataset_size/K
                 #create data_file
-                filename = os.path.join(self.dataset_root, self.dataset_name, 'feas', 'activity', phase + '.npy')
+                
+                save_path = os.path.join(self.dataset_root, self.dataset_name, 'feas', 'activity')
+                if not os.path.exists(save_path):
+                       os.makedirs(save_path)
                 feas = np.zeros([dataset_size/K, feas_size*K+1])
+                filename = os.path.join(save_path, phase + '.npy')
                 np.save(filename, feas)
                 print 'The features files are created at ' + filename + '\n'
 

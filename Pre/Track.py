@@ -11,20 +11,38 @@ class Track(object):
     """docstring for Track"""
     def __init__(self, dataset_root, dataset_confs, dataset_name, model_confs=None):
         super(Track, self).__init__()
+        self.dataset_root = dataset_root
         self.dataset_folder = os.path.join(dataset_root, dataset_name, 'videos')
         self.num_players = dataset_confs.num_players
         self.num_videos = dataset_confs.num_videos
         self.num_frames = model_confs.num_frames
         
+        self.phases = ['trainval','test']
+        self.videos = {phase: dataset_confs.splits[phase] for phase in self.phases}
+        
         self.action_list = dataset_confs.action_list
         self.activity_list = dataset_confs.activity_list
-        self.trainval_videos = dataset_confs.splits['trainval']
-        self.test_videos = dataset_confs.splits['test']
+        
         self.tracker = dlib.correlation_tracker()
         self.save_folder = os.path.join(dataset_root, dataset_name, 'imgs')
         print 'the person imgs are saved at',self.save_folder
 
-
+    def annotation_parse(self, line):
+        keywords = deque(line.strip().split(' '))
+        frame_id = keywords.popleft().split('.')[0]
+        activity = self.activity_list.index(keywords.popleft())
+        Rects = []
+        while keywords:
+            x = int(keywords.popleft())
+            y = int(keywords.popleft())
+            w = int(keywords.popleft())
+            h = int(keywords.popleft())
+            action = self.action_list.index(keywords.popleft())
+            Rects.append([x,y,w,h,action,activity])
+        Rects = np.asarray(Rects)
+        # sort Rects by the first col
+        Rects = Rects[np.lexsort(Rects[:,::-1].T)]
+        return frame_id, Rects
 
     def track(self, person_rects, imgs, tracker, save_path):
         candidate = {}
