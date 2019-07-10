@@ -6,8 +6,9 @@ We give a general **DMS**(**D**ata, **M**odel, **S**olver) code framework for PC
 ## Requirements
 &gt; Ubuntu 16.04  
 &gt; pytorch 0.4.1  
+= opencv 2.4
 = python 2.7  
-`pip install dlib`
+`pip install dlib` or `conda install -c menpo dlib`
 
 ## The general piplines of GAR
 You can run `python GAR.py` to excute all the following steps.
