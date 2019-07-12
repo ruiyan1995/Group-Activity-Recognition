@@ -47,7 +47,12 @@ class Data_Configs(object):
                     'trainval_activity': 'feas',
                 },
                 'label_type': {'trainval_activity': 'activity', 'end_to_end':'activity'},
-                'batch_size': {'trainval_activity': {'trainval': 500, 'test': 10}}
+                'batch_size': {
+                    'trainval_activity':{
+                        'VD':{'trainval': 500, 'test': 10},
+                        'CAD':{'trainval': 500, 'test': 10}
+                    }
+                }
             }
         }
 
