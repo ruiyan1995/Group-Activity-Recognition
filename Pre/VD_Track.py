@@ -68,7 +68,7 @@ class VD_Track(Track):
                                 filename = files[i]
                                 action_label = filename.split('_')[1]
                                 activity_label = filename.split('_')[2].split('.')[0]
-                                file_path = os.path.join(imgs_folder, filename)
+                                file_path = os.path.join(root, filename)
                                 action_list.append(file_path + '\t' + action_label + '\n')
                                 activity_list.append(file_path + '\t' + activity_label + '\n')
                             else:
