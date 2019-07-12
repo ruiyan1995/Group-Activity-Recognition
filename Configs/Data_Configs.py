@@ -28,7 +28,16 @@ class Data_Configs(object):
                     'extract_action_feas': 'imgs_ranked',
                 },
                 'label_type': {'trainval_action': 'action', 'extract_action_feas': 'activity'},
-                'batch_size': {'trainval_action': {'trainval': 300, 'test': 10}, 'extract_action_feas': {'trainval': 120, 'test': 120} }
+                'batch_size': {
+                    'trainval_action': {
+                        'VD':{'trainval': 300, 'test': 10},
+                        'CAD':{'trainval': 300, 'test': 10}
+                    }, 
+                    'extract_action_feas': {
+                        'VD':{'trainval': 120, 'test': 120},
+                        'CAD':{'trainval': 50, 'test': 50}
+                    }
+                }
             },
             'activity': {
                 'data_type': {
@@ -48,7 +57,7 @@ class Data_Configs(object):
         parser.add_argument('--dataset_folder', type=str, default=os.path.join(
             self.dataset_root, self.dataset_name, dataset_confs['cur_folder'][self.mode]), help='')
         parser.add_argument('--batch_size', type=dict,
-                            default=dataset_confs['batch_size'][self.mode])
+                            default=dataset_confs['batch_size'][self.mode][self.dataset_name])
 
         parser.add_argument('--data_type', type=str, default=dataset_confs[
                             'data_type'][self.mode], choices=['img', 'hdf5', 'npy'], help='the story type for data')
