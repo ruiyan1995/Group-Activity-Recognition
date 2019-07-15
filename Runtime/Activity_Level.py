@@ -13,7 +13,6 @@ class Activity_Level(Piplines):
     
     def evaluate(self):
         pretrained_dict = torch.load('./weights/'+self.dataset_name+'/activity/best_wts.pkl')
-        self.net = Models.PCTDM(pretrained=False, model_confs=self.model_confs)
         self.net.load_state_dict(pretrained_dict)
         self.net.eval()
         self.solver.evaluate()
