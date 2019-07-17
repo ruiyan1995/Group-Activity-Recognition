@@ -115,7 +115,7 @@ class CAD_Track(Track):
             for line in lines:
                 frame_id, rects = self.annotation_parse(line)
                 if int(frame_id) + 4 <=len(img_list) and int(frame_id)-5>0:
-                    print 'video_id: ', video_id, 'frame_id: ', frame_id
+                    #print 'video_id: ', video_id, 'frame_id: ', frame_id
                     clip_list = img_list[int(frame_id)-6:int(frame_id)+4]
                     imgs['pre'] = clip_list[:5][::-1]
                     imgs['back'] = clip_list[4:]

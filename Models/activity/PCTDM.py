@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
 import torch.nn.functional as F
 import utils
+import math
 from torch.autograd import Variable
 __all__ = ['PCTDM', 'pCTDM']
 
@@ -15,6 +16,7 @@ class pCTDM(nn.Module):
         self.hidden_size = 1000
         self.num_players = model_confs.num_players
         self.num_classes = model_confs.num_classes
+        self.num_groups = model_confs.num_groups
         self.do_attention = True
         self.do_one_to_all = True
         self.do_early_pooling = True
@@ -23,25 +25,44 @@ class pCTDM(nn.Module):
         if self.interaction:
             self.Bi_Lstm = nn.LSTM(self.input_size, self.hidden_size, num_layers = 1, batch_first = True, bidirectional=True)
             self.early_pooling = nn.MaxPool2d((2,1), stride = (2,1))
-            self.fc_last = nn.Linear(self.hidden_size*(2+2*(not self.do_early_pooling)), self.num_classes)
+            self.fc_last = nn.Linear(self.hidden_size*(1+(not self.do_early_pooling))*self.num_groups, self.num_classes)
         else:
-            self.fc_last = nn.Linear(self.input_size*2, self.num_classes)
+            self.fc_last = nn.Linear(self.input_size*self.num_groups, self.num_classes)
         
         
         if self.do_attention:
             #self.attention_fun = nn.Linear(1000, 1)
             fea_size = self.hidden_size*(1+(not self.do_early_pooling))
-            self.attention_fun = nn.Sequential(
-                nn.Dropout(0.5),
-                nn.Linear(fea_size, 1),
-                #nn.Tanh()
-                #nn.ReLU(inplace=True)
+            
+            self.att_source_weights = nn.Sequential(
+                nn.Linear(fea_size, fea_size, bias=True),
             )
+            self.att_context_weights = nn.Sequential(
+                nn.Linear(fea_size, fea_size, bias=True),
+            )
+            self.att_extra_weights = nn.Sequential(
+                nn.Linear(fea_size, 1, bias=True),
+            )
+            
+            
             if self.do_one_to_all:
                 self.Intra_Group_LSTM = nn.LSTM(fea_size, fea_size, num_layers = 1, batch_first = True)
         else:
-            self.pool = nn.MaxPool2d((6, 1), stride = (6, 1))
+            self.pool = nn.MaxPool2d((self.num_players/self.num_groups, 1), stride = (self.num_players/self.num_groups, 1))
+    
+    def get_att_weigths(self, x_s, context=None):
+        gammas = {}
+        if context is not None:
+            context = torch.unsqueeze(context, 1).repeat(1, self.num_players/self.num_groups, 1)
+            for g in xrange(self.num_groups):
+                gammas[g] = F.softmax(torch.squeeze(self.att_extra_weights(
+                   F.tanh(self.att_source_weights(x_s[g])+self.att_context_weights(context))))).view(-1,1,self.num_players/self.num_groups)
+        else:
+            for g in self.num_groups:
+                gammas[g] = F.softmax(torch.squeeze(F.tanh(self.att_source_weights(x_s[g])))).view(-1,1,self.num_players/self.num_groups)
 
+        return gammas
+    
     def forward(self, x):
         x = x.view(x.size(0), self.num_players, x.size(1)/self.num_players)
         # x = (batch, seq_len=K, input_size)
@@ -72,29 +93,30 @@ class pCTDM(nn.Module):
             # x(N,1,12,1000)
             x = torch.squeeze(x)
             # x(N,12,1000)
-            lx, rx = torch.chunk(x, 2, 1)
-            #print lx.size(),rx.size()
-            lgamma = F.softmax(torch.squeeze(self.attention_fun(lx))).view(-1,1,6)
-            rgamma = F.softmax(torch.squeeze(self.attention_fun(rx))).view(-1,1,6)
+            x_s = torch.chunk(x, self.num_groups, 1)
+            context = torch.mean(x, 1)
+            gammas = self.get_att_weigths(x_s, context)
             
+            group_feas = {}
             if self.do_one_to_all:
             # one to all LSTM, output last node in each group
-                lgamma, rgamma = lgamma.view(lgamma.size(0),-1,1), rgamma.view(rgamma.size(0),-1,1)
-                lgamma.expand(lgamma.size(0),6,1000)
-                rgamma.expand(rgamma.size(0),6,1000)
-                #print lgamma.expand(lgamma.size(0),6,1000)*lx
-                group1, _ = self.Intra_Group_LSTM(lx*lgamma)
-                group2, _ = self.Intra_Group_LSTM(rx*rgamma)
-                #print group1[:,-1,:].size(), group2[:,-1,:].size()
-                x = torch.cat((group1[:,-1,:], group2[:,-1,:]), 1)
+                for g in xrange(self.num_groups):
+                    gammas[g] = gammas[g].view(gammas[g].size(0),-1,1)
+                    group_feas[g], _ = self.Intra_Group_LSTM(x_s[g] + x_s[g]*gammas[g])
+                    group_feas[g] = group_feas[g][:,-1,:]
+                x = torch.cat(tuple(group_feas.values()), 1)
             else:
-                x = torch.cat((torch.bmm(lgamma, lx), torch.bmm(rgamma, rx)), 2)
-            
+                #x = torch.cat((torch.bmm(lgamma, lx), torch.bmm(rgamma, rx)), 2)
+                for g in xrange(self.num_groups):
+                    gammas[g] = gammas[g].view(gammas[g].size(0),-1,1)
+                    group_feas[g]= torch.bmm(gammas[g], x_s[g])
+                x = torch.cat(tuple(group_feas.values()), 2)
+
             x = torch.squeeze(x)
 
         else:
             # do intra-group pooling
-            x = torch.cat(torch.chunk(x, 2, 2), 3)
+            x = torch.cat(torch.chunk(x, self.num_groups, 2), 3)
             x = self.pool(x)
             x = x.view(x.size(0), -1)
 
@@ -105,9 +127,6 @@ class pCTDM(nn.Module):
 def PCTDM(pretrained=False, **kwargs):
     model = pCTDM(**kwargs)
     if pretrained:
-        pretrained_dict = torch.load('/home/ubuntu/MM/models/ranked_one_to_all/best_test_acc.pkl')
+        pretrained_dict = torch.load('****.pkl')
         model.load_state_dict(pretrained_dict)
-        '''for k,v in pretrained_dict.items():
-            print k
-        print model'''
     return model

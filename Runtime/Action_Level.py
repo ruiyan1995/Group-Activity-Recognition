@@ -45,7 +45,7 @@ class Action_Level(Piplines):
                 for data in data_loader:
                     # get the inputs
                     inputs, labels = data
-                    print batch_size*i,'/',dataset_size/K
+                    #print batch_size*i,'/',dataset_size/K
                     # wrap them in Variable
                     inputs = Variable(inputs.float().cuda()) if torch.cuda.is_available() else Variable(inputs.float())
                     # forward

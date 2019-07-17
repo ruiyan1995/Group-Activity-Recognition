@@ -83,7 +83,7 @@ class Piplines(object):
         dataset = {phase: eval('Data.' + data_confs.data_type)(
             data_confs.dataset_folder, phase, data_confs.label_type, data_transforms[phase] if data_transforms else None) for phase in phases}
         data_loaders = {phase: torch.utils.data.DataLoader(dataset[phase], batch_size=data_confs.batch_size[
-                                                           phase], num_workers=8, shuffle=False) for phase in phases}
+                                                           phase], num_workers=16, shuffle=False) for phase in phases}
         # num_workers=8
         if self.mode=='end_to_end':
             data_sizes = {phase: len(dataset[phase])/self.model_confs.num_players for phase in phases}

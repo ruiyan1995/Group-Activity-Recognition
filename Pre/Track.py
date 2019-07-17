@@ -45,7 +45,6 @@ class Track(object):
         return frame_id, Rects
 
     def track(self, person_rects, imgs, tracker, save_path):
-        candidate = {}
         for i, person_rect in enumerate(person_rects):
             for j, phase in enumerate(['pre', 'back']):
                 if j == 0:
@@ -64,12 +63,9 @@ class Track(object):
                     pos = tracker.get_position()
                     top, bottom, left, right = max(int(pos.top()),0),max(int(pos.bottom()),0),max(int(pos.left()),0),max(int(pos.right()),0)
                     cropped_image = frame_img[top:bottom,left:right]
-                    #cropped_image = transform.resize(np.ascontiguousarray(cropped_image),(256,256),mode='constant')
                     cropped_image = cv2.resize(cropped_image,(256,256), interpolation=cv2.INTER_CUBIC)
 
                     img_name = os.path.join(save_path, "%04d_%d_%d.jpg"%(10*i+(5+j*k), label, group_label))
-                    #print img_name
-                    #io.imsave(img_name, cropped_image)
                     cv2.imwrite(img_name, cropped_image)
 
                     

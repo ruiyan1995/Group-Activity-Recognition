@@ -40,9 +40,9 @@ class AlexNet_LSTM(nn.Module):
             nn.Dropout(0.5),
             nn.Linear(256 * 6 * 6, 4096),
             nn.ReLU(inplace=True),
-            #nn.Dropout(0.5),
-            #nn.Linear(4096, 4096),
-            #nn.ReLU(inplace=True),
+            nn.Dropout(0.5),
+            nn.Linear(4096, 4096),
+            nn.ReLU(inplace=True),
         )
         if self.do_LSTM:
             self.LSTM = nn.LSTM(input_size=4096, hidden_size=3000, num_layers=1, batch_first=True)
@@ -51,6 +51,7 @@ class AlexNet_LSTM(nn.Module):
         else:
             if self.do_Classify:
                 self.classifier = nn.Linear(4096, model_confs.num_classes)
+
     def forward(self, x):
         x = self.features(x)
         x = x.view(x.size(0), 256 * 6 * 6)

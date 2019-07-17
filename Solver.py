@@ -55,7 +55,6 @@ class Solver:
         self.running_corrects += torch.sum(preds == labels)
 
     def train_model(self, phases=['trainval', 'test']):
-        best_model_wts = self.net.state_dict()
         best_acc = 0.0
         for epoch in range(self.num_epochs):
             print('Epoch {}/{}'.format(epoch, self.num_epochs - 1))
@@ -95,7 +94,7 @@ class Solver:
 
                 if phase == 'test' and epoch_acc > best_acc:
                     best_acc = epoch_acc
-                    torch.save(self.net.state_dict(),os.path.join(self.save_path, 'best_wts.pkl'))
+                    torch.save(self.net.state_dict(), os.path.join(self.save_path, 'best_wts.pkl'))
         print('Best test Acc: {:4f}'.format(best_acc))
 
         
