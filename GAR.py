@@ -10,7 +10,7 @@ import time
 torch.cuda.set_device(0)
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset_root', type=str, default='./dataset/', help='Please set the root folder of datasets')
-parser.add_argument('--dataset_name', type=str, default='CAD', choices=['VD', 'CAD'], help='Please choose one of the dataset')
+parser.add_argument('--dataset_name', type=str, default='VD', choices=['VD', 'CAD'], help='Please choose one of the dataset')
 
 
 opt = parser.parse_args()
