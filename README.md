@@ -14,7 +14,7 @@ You can run `python GAR.py` to excute all the following steps.
 ### Step Zero: Preprocessing dataset
 - To download [VD](https://github.com/mostafa-saad/deep-activity-rec#dataset) and [CAD](http://vhosts.eecs.umich.edu/vision//activity-dataset.html) at './dataset/VD' and './dataset/CAD' folder;
 - Add `none.jpg`
-- To track the persons and generate the train/test files by using **Preprocessing.py**;
+- To track the persons and generate the train/test files by using **Processing.py**;
 
 ### Step One: Action Level
 - To create a `Piplines` instance as:
@@ -24,7 +24,7 @@ You can run `python GAR.py` to excute all the following steps.
 - For extracting action features, you can use `Action.extract_feas(save_folder='*')`.
 
 ### Step Two: Activity Level
-This is the core part of GAR which need your design. We proposed a novel PCTDM to aggreate the action features with attending to key persons.
+This is the core part of GAR which need to be designed by youself. We proposed a novel PCTDM to aggreate the action features with attending to key persons.
 - To create a `Piplines` instance as:
 
 &nbsp;&nbsp;`Activity = Activity_Level(dataset_root, dataset_name, 'trainval_activity')`;
