@@ -35,8 +35,8 @@ class VD_Track(Track):
             for line in lines:
                 frame_id, rects = self.annotation_parse(line)
                 #img_list = sorted(glob.glob(os.path.join(self.dataset_folder, video_id, frame_id, "*.jpg")))[16:26]
-                 img_list = glob.glob(os.path.join(self.dataset_folder, video_id, frame_id, "*.jpg"))
-                 img_list = sorted(img_list, key=lambda x:int(x.split('/')[-1].split('.')[0]))[20-int((self.num_frames-1)/2):21+int(np.ceil(float(self.num_frames-1)/2.0))]
+                img_list = glob.glob(os.path.join(self.dataset_folder, video_id, frame_id, "*.jpg"))
+                img_list = sorted(img_list, key=lambda x:int(x.split('/')[-1].split('.')[0]))[20-int((self.num_frames-1)/2):21+int(np.ceil(float(self.num_frames-1)/2.0))]
                 imgs['pre'] = img_list[:5][::-1]
                 imgs['back'] = img_list[4:]
                 
