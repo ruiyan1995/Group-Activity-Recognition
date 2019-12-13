@@ -109,7 +109,9 @@ class CAD_Track(Track):
             video_id = str(video_id)
             annotation_file = os.path.join(video_folder, 'annotations_new.txt')
             lines = open(annotation_file).readlines()
-            img_list = sorted(glob.glob(os.path.join(video_folder, "*.jpg")))
+            #img_list = sorted(glob.glob(os.path.join(video_folder, "*.jpg")))
+            img_list = glob.glob(os.path.join(video_folder, "*.jpg"))
+            img_list = sorted(img_list, key=lambda x:int(x.split('/')[-1].split('.')[0]))[20-int((self.num_frames-1)/2):21+int(np.ceil(float(self.num_frames-1)/2.0))]
             #print video_id, len(img_list)
             imgs={}
             for line in lines:
