@@ -74,6 +74,6 @@ class Track(object):
         txtFile = os.path.join(self.save_folder, phase + '_' + label_type + '.txt')
         open(txtFile, 'w')
         print label_type + '_' + phase +'_size:' + str(len(source_list)/(block_size))
-        for i in range(len(source_list)):
-            with open(txtFile, 'a') as f:
+        with open(txtFile, 'w') as f:
+            for i in range(len(source_list)):
                 f.write(source_list[i])
